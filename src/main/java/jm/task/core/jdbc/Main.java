@@ -4,7 +4,6 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
@@ -33,7 +32,7 @@ public class Main {
             }
 
             // Вызываю метод removeUserById() для удаления из БД пользователя по id
-            userService.removeUserById(1);
+            userService.removeUserById(3);
 
             // Вызываю метод cleanUsersTable() для удаления всех записей из таблицы пользователей
             // при этом, структура таблицы не изменяется

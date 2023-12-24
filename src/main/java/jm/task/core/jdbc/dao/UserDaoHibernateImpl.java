@@ -71,8 +71,12 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         try (Session session = Util.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
-            session.createQuery("delete User where id = id").executeUpdate();
+            User user = (User) session.get(User.class, id);
+            session.createQuery("delete User where id = :id") // исправила использование строки id на использование значения id
+                    .setParameter("id", id) // передала значение id в качестве параметра
+                    .executeUpdate();
             session.getTransaction().commit();
+            System.out.println("Пользователь с id " + id + " удалён из БД");
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Ошибка при удалении пользователя: " + e.getMessage());
