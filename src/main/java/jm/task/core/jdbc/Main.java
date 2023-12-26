@@ -33,7 +33,7 @@ public class Main {
             }
 
             // Вызываю метод removeUserById() для удаления из БД пользователя по id
-            userService.removeUserById(1);
+            userService.removeUserById(2);
 
             // Вызываю метод cleanUsersTable() для удаления всех записей из таблицы пользователей
             // при этом, структура таблицы не изменяется

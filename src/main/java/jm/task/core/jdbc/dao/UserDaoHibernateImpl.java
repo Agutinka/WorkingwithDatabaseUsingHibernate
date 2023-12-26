@@ -71,7 +71,19 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         try (Session session = Util.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
-            session.createQuery("delete User where id = id").executeUpdate();
+
+            // получаю пользователя по id перед удалением
+            User userToRemove = session.get(User.class, id);
+
+            // удаляю пользователя по id
+            session.delete(userToRemove);
+            System.out.println("Пользователь с id " + id + " удалён успешно");
+
+//  С явным использованием HQL
+//            session.createQuery("delete User where id = :id")
+////                    .setParameter("id", id)
+//                    .executeUpdate();
+
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +97,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            userList = session.createQuery("from User").getResultList();
+            userList = session.createQuery("from User", User.class).getResultList();
             transaction.commit();
 
         } catch (Exception e) {
